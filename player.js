@@ -16,8 +16,6 @@ var Player = function(x, y, level){
 	PS.spriteMove(this.sprite, this.x, this.y);
 	
 	PS.spriteCollide(this.sprite, this.Collision.bind(this));
-	
-	level.addObject(this);
 };
 
 GameObject.prototype.impart(Player);
@@ -35,12 +33,11 @@ Player.prototype.Draw = function(offsetX, offsetY){
 		PS.spriteMove(this.sprite, this.x, this.y);
 	}
 	
-	
-	//PS.spriteDelete(afterImage);
 };
 
 Player.prototype.Update = function(){
-	
+	this.remove = true;
+	PS.debug("Do I exist?\n");
 };
 
 Player.prototype.setLevel = function(level)

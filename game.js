@@ -43,19 +43,14 @@ See dygraphs License.txt, <http://dygraphs.com> and <http://opensource.org/licen
 
 var Game;
 var Level;
-var Player;
 
 PS.init = function( system, options ) {
 	"use strict";
 	
 	Game = new Window(32, 32);
 	Level = new Level(32, 2000, PS.COLOR_ORANGE);
-		
-	Player = new Player(16, 12, Level);
 	
-	Game.addObject(Level);
-	
-	Level.setPlayer(Player);
+	Game.addObject(new Player(16, 12, Level));
 	
 	Game.run();
 };

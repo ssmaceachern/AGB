@@ -11,8 +11,12 @@ var GameObject = function(x, y, w, h, name){
 	this.w = w;
 	this.h = h;
 	this.name = name;
+	
 	this.time = -1;
 	this.sprite = null;
+	
+	this.active = true;
+	this.remove = false;
 };
 
 GameObject.prototype.spriteLoader = function(image){
