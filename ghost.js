@@ -13,6 +13,8 @@ var Ghost = function(x, y, level){
 	this.level = level;
 	
 	this.active = true;
+	this.dead = false;
+	
 	this.collidable = true;
 	
 	this.moveSpeed = 1/30;
@@ -43,8 +45,8 @@ Ghost.prototype.Draw = function(offsetX, offsetY){
 };
 
 Ghost.prototype.Update = function(){
-	this.x = this.x + 1;
-	this.y = this.y + 1;
+	//this.x = this.x + 1;
+	this.y += this.moveSpeed;
 };
 
 Ghost.prototype.setLevel = function(level)

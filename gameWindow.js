@@ -63,6 +63,16 @@ Window.prototype.removeAllObjects = function(){
 	}
 };
 
+Window.prototype.removeAllObjectsFromLevel = function(){
+	for (var i = 0; i < this.objects.length; ++i) {
+		if(this.objects[i].name != "Level")
+		{
+			this.objects[i].remove = true;	
+		}
+	}
+};
+
+
 Window.prototype.keyDown = function(key) {
 	this.keys[key] = 1;
 };
@@ -94,7 +104,6 @@ Window.prototype.Update = function(){
 	// Remove inactive children
 	for (var i = 0; i < this.objects.length; ++i) {
 		if(this.objects[i].remove){
-			PS.debug("Remove\n");
 			
 			this.Erase(this.objects[i]);
 			this.objects.splice(i--, 1);	
@@ -110,7 +119,7 @@ Window.prototype.Draw = function(offsetX, offsetY) {
 		if(this.objects[i].active)
 		{
 			this.objects[i]._draw(offsetX, offsetY);
-			PS.debug("DRAW: " + this.objects[i].name + " " + this.objects[i].sprite + "\n");
+			//PS.debug("DRAW: " + this.objects[i].name + " " + this.objects[i].sprite + "\n");
 		}
 			
 	}

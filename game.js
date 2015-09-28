@@ -47,12 +47,13 @@ var Level;
 PS.init = function( system, options ) {
 	"use strict";
 	
+	PS.audioLoad("bg-music", {autoplay : true, loop : true, path : "audio/", fileTypes : ["mp3"]});
+	
 	Game = new Window(32, 32, PS.COLOR_ORANGE);
 	Level = new Level(Game);
 	
-	Level.PlayGame();
+	Level.StartGame();
 	
-	Game.run();
 };
 
 // PS.touch ( x, y, data, options )
