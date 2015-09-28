@@ -11,6 +11,8 @@ var Player = function(x, y, level, playerNum){
 	this.active = true;
 	this.collidable = true;
 	
+	this.punchFlag = false;
+	
 	this.playerNum = playerNum;
 	
 	/*
@@ -38,22 +40,27 @@ Player.prototype.Draw = function(offsetX, offsetY){
 };
 
 Player.prototype.Update = function(){
-	switch(this.playerNum){
-		case 1:
-			break;
-		case 2:
-			break;
-		default:
-			break;
+	// if(this.punchFlag){
+		// this.punchFlag = false;
+	// }
+	
+	// switch(this.playerNum){
+		// case 1:
+			// break;
+		// case 2:
+			// break;
+		// default:
+			// break;
+	// }
+	
+	if(Game.getKey(PS.KEY_ARROW_UP) === 1 && Game.getKey(119) === 1){
+		this.punchFlag = true;
+		//PS.color(1,1, PS.COLOR_RED);
+	} else {
+		//PS.color(1,1, PS.COLOR_ORANGE);
+		this.punchFlag = false;
 	}
 	
-	if(Game.getKey(PS.KEY_ARROW_RIGHT) === 1 && Game.getKey(PS.KEY_ARROW_LEFT) === 1){
-		PS.debug("Right Key and Left Key\n");
-	}
-	
-	if(Game.getKey(PS.KEY_ARROW_LEFT) === 1){
-		PS.debug("Left Key\n");
-	}
 };
 
 Player.prototype.setLevel = function(level)
@@ -62,6 +69,14 @@ Player.prototype.setLevel = function(level)
 };
 
 Player.prototype.Collision = function(s1, p1, s2, p2, type){
-	//PS.debug(this.name + ": Collision\n");
-	this.level.EndGame();
+	
+	var CollidedObject = Game.GetObjectBySprite(s2);
+	if(this.punchFlag && CollidedObject.name == "Ghost"){
+		CollidedObject.dead = true;
+		this.punchFlag = false;
+		
+	}else if(this.punchFlag == false){
+		this.level.EndGame();	
+	}
+	
 };

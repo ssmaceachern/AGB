@@ -47,6 +47,7 @@ Level.prototype.PlayGame = function(){
 	this.CurrentMode = this.MODES.Play;
 	
 	PS.spriteShow(this.sprite, false);
+	
 	PS.statusText("Defeat the Ghosts!");
 	
 	this.Game.addObject(new Player(11, 14, this, 1));
@@ -63,7 +64,7 @@ Level.prototype.PauseGame = function(){
 Level.prototype.EndGame = function(){
 	this.CurrentMode = this.MODES.End;
 	PS.imageLoad("lose.png", this.spriteLoader.bind(this), 4);
-	PS.statusText("Damn! Nuclear Death is upon us!");
+	PS.statusText("Damn! Press Enter to Restart");
 	
 	this.Game.removeAllObjectsFromLevel();
 };
@@ -87,10 +88,12 @@ Level.prototype.Update = function(){
 		case this.MODES.Pause:
 			break;
 		case this.MODES.End:
+			
 			if(Game.getKey(PS.KEY_ENTER) === 1){
 				//PS.debug("Player Enter\n");
-				this.CurrentMode = this.MODES.Play;
-				this.CurrentMode();
+				location.reload();
+				// this.CurrentMode = this.MODES.Play;
+				// this.CurrentMode();
 			}
 			break;
 		default:
