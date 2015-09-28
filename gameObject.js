@@ -17,12 +17,20 @@ var GameObject = function(x, y, w, h, name){
 	
 	this.active = true;
 	this.remove = false;
+	
+	this.collidable = false;
 };
 
 GameObject.prototype.spriteLoader = function(image){
 	//Load Ball Sprite
 	if(this.sprite == null){
-		this.sprite = PS.spriteImage(image);	
+		this.sprite = PS.spriteImage(image);
+		
+		if(this.collidable == true)
+		{
+			PS.spriteCollide(this.sprite, this.Collision.bind(this));	
+		}
+			
 	}
 };
 

@@ -47,10 +47,10 @@ var Level;
 PS.init = function( system, options ) {
 	"use strict";
 	
-	Game = new Window(32, 32);
-	Level = new Level(32, 2000, PS.COLOR_ORANGE);
+	Game = new Window(32, 32, PS.COLOR_ORANGE);
+	Level = new Level(Game);
 	
-	Game.addObject(new Player(16, 12, Level));
+	Level.PlayGame();
 	
 	Game.run();
 };
@@ -156,10 +156,7 @@ PS.keyDown = function( key, shift, ctrl, options ) {
 	//	PS.debug( "DOWN: key = " + key + ", shift = " + shift + "\n" );
 
 	// Add code here for when a key is pressed
-	
-	switch (key){
-		
-	}
+	Game.keyDown(key);
 };
 
 // PS.keyUp ( key, shift, ctrl, options )
@@ -179,6 +176,7 @@ PS.keyUp = function( key, shift, ctrl, options ) {
 	// PS.debug( "PS.keyUp(): key = " + key + ", shift = " + shift + ", ctrl = " + ctrl + "\n" );
 
 	// Add code here for when a key is released
+	Game.keyUp(key);
 };
 
 // PS.swipe ( data, options )

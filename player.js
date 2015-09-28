@@ -8,14 +8,15 @@ var Player = function(x, y, level){
 	this.color = PS.COLOR_BLACK;
 	this.level = level;
 	
-	/*
-	 * Load the player sprite
-	 */
-	this.sprite = PS.spriteSolid(this.w, this.h);
-	PS.spriteSolidColor ( this.sprite, this.color );
-	PS.spriteMove(this.sprite, this.x, this.y);
+	this.active = true;
+	this.collidable = true;
 	
-	PS.spriteCollide(this.sprite, this.Collision.bind(this));
+	/*
+	 * Load the Player sprite
+	 */
+	
+	this.imageID = PS.imageLoad("player.png", this.spriteLoader.bind(this), 4);
+	
 };
 
 GameObject.prototype.impart(Player);
@@ -28,16 +29,14 @@ Player.prototype.Draw = function(offsetX, offsetY){
 	if(this.sprite != null){
 		var loc = PS.spriteMove(this.sprite, this.x, this.y);	
 	}else{
-		this.sprite = PS.spriteSolid(this.w, this.h);
-		PS.spriteSolidColor ( this.sprite, this.color );
-		PS.spriteMove(this.sprite, this.x, this.y);
+		
+		this.imageID = PS.imageLoad("player.png", this.spriteLoader.bind(this), 4);
 	}
 	
 };
 
 Player.prototype.Update = function(){
-	this.remove = true;
-	PS.debug("Do I exist?\n");
+	
 };
 
 Player.prototype.setLevel = function(level)
@@ -46,7 +45,6 @@ Player.prototype.setLevel = function(level)
 };
 
 Player.prototype.Collision = function(s1, p1, s2, p2, type){
-	
-	var CollidingObject = this.level.getObjectBySprite(s2);
-	
+	PS.debug(this.name + ": Collision\n");
+	this.level.EndGame();
 };
