@@ -92,7 +92,7 @@ Window.prototype.Erase = function(object){
 			PS.spriteDelete(object.sprite);
 		}
 		else{
-			PS.debug("ERASE: " + object.sprite + " " + object.removes + "\n");
+			//PS.debug("ERASE: " + object.sprite + " " + object.removes + "\n");
 		}
 };
 

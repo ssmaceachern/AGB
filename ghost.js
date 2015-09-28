@@ -7,7 +7,7 @@
  */
 
 var Ghost = function(x, y, level, directionIndex){
-	GameObject.call(this, x, y, 2, 4, "Ghost");
+	GameObject.call(this, x, y, 5, 5, "Ghost");
 	
 	this.color = PS.COLOR_BLACK;
 	this.level = level;
@@ -19,14 +19,14 @@ var Ghost = function(x, y, level, directionIndex){
 	this.moveSpeed = 1/30;
 	
 	this.directions = {
-		NORTH 	: -this.moveSpeed,		//0
+		NORTH 	: this.moveSpeed,		//0
 		SOUTH 	: this.moveSpeed,		//1
-		EAST 	: -this.moveSpeed,		//2
+		EAST 	: this.moveSpeed,		//2
 		WEST 	: this.moveSpeed		//3
 	};
 	
 	//this.direction = this.directions[directionIndex];
-	//this.directionIndex = directionIndex;
+	this.directionIndex = directionIndex;
 	/*
 	 * Load the Ghost sprite
 	 */
@@ -49,25 +49,25 @@ Ghost.prototype.Draw = function(offsetX, offsetY){
 };
 
 Ghost.prototype.Update = function(){
-	//PS.debug(this.directionIndex + "\n");
-	// switch(this.directionIndex){
-// 		
-		// case(0):
-		// this.y -= this.moveSpeed;
-		// //break;
-		// case(1):
-		// this.y += this.moveSpeed;
-		// //break;
-		// case(2):
-		// this.x += this.moveSpeed;
-		// //break;
-		// case(3):
-		// this.x -= this.moveSpeed;
-		// //break;
-	// }
+	PS.debug(this.directionIndex + "\n");
+	switch(this.directionIndex){
+		
+		case(0):
+		this.y -= this.moveSpeed;
+		break;
+		case(1):
+		this.y += this.moveSpeed;
+		break;
+		case(2):
+		this.x += this.moveSpeed;
+		break;
+		case(3):
+		this.x -= this.moveSpeed;
+		break;
+	}
 	
-	this.y += this.moveSpeed;
-	//PS.debug(this.x + " " + this.y + "\n");
+	//this.y += this.moveSpeed;
+	PS.debug(this.sprite + ": " + this.x + " " + this.y + "\n");
 };
 
 Ghost.prototype.setLevel = function(level)
