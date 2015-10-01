@@ -6,6 +6,8 @@ var CalculateDistance = function(object1, object2){
 	return Math.sqrt( Math.pow((object1.x-object2.x), 2) + Math.pow((object1.y-object2.y), 2) );
 };
 
+var LoseFlag = false;
+
 var Player = function(x, y, level, playerNum){
 	GameObject.call(this, x, y, 4, 5, "Player" + playerNum);
 	
@@ -18,6 +20,8 @@ var Player = function(x, y, level, playerNum){
 	this.ghost = null;
 	this.punchFlag = false;
 	this.punchCooldown = 0;
+	
+	this.distanceFromGhost = 0;
 	
 	this.playerNum = playerNum;
 	
@@ -37,7 +41,9 @@ Player.prototype.Draw = function(offsetX, offsetY){
 	this.y = this.y + offsetY;
 	
 	if(this.sprite != null){
-		var loc = PS.spriteMove(this.sprite, this.x, this.y);	
+		//PS.spriteShow(this.sprite, true);
+		var loc = PS.spriteMove(this.sprite, this.x, this.y);
+		this.imageID = PS.imageLoad("player.png", this.spriteLoader.bind(this), 4);	
 	}else{
 		
 		this.imageID = PS.imageLoad("player.png", this.spriteLoader.bind(this), 4);
@@ -60,9 +66,10 @@ Player.prototype.Update = function(){
 	}
 	
 	//PS.debug(this.name + ": " + CalculateDistance(this, this.ghost) + "\n");
+	this.distanceFromGhost = CalculateDistance(this, this.ghost);
 	
-	if(CalculateDistance(this, this.ghost) < 12){
-		PS.debug("Target is within range!\n");
+	if(this.distanceFromGhost < 8){
+		//PS.debug("Target is within range!\n");
 		
 		if(this.playerNum == 1){
 			//WSA Keys respectively
@@ -80,14 +87,23 @@ Player.prototype.Update = function(){
 				this.Punch();
 			}
 		}
+		
+		if(this.punchFlag){
+			this.ghost.dead = true;
+		}
 	}
 	
 	if(this.punchCooldown > 0){
 		this.punchCooldown--;
 	}
 	
-	if(this.punchCooldown == 0){
+	if(this.punchCooldown <= 0){
 		this.punchFlag = false;
+	}
+	
+	if(LoseFlag)
+	{
+		this.level.EndGame();
 	}
 };
 
@@ -111,7 +127,7 @@ Player.prototype.Punch = function()
 			break;
 	}
 	
-	this.punchCooldown = 30;
+	this.punchCooldown = 20;
 };
 
 Player.prototype.setLevel = function(level)
@@ -122,12 +138,14 @@ Player.prototype.setLevel = function(level)
 Player.prototype.Collision = function(s1, p1, s2, p2, type){
 	
 	var CollidedObject = Game.GetObjectBySprite(s2);
-	if(this.punchFlag && (CollidedObject.name == "Ghost1" || CollidedObject.name == "Ghost2")){
-		CollidedObject.dead = true;
-		//this.punchFlag = false;
+	if((CollidedObject.name == "Ghost1" || CollidedObject.name == "Ghost2")){
+		if(this.punchFlag == true){
+			//CollidedObject.dead = true;
+		}
+		else{
+			LoseFlag = true;	
+		}
 		
-	}else if(this.punchFlag == false){
-		this.level.EndGame();	
 	}
 	
 };

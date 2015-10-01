@@ -16,7 +16,8 @@ var Ghost = function(x, y, level, directionIndex, name){
 	this.dead = false;
 	
 	this.collidable = true;
-	this.moveSpeed = 1/30;
+	//this.moveSpeed = 1/30;
+	this.moveSpeed = 1/30 + (GhostsKilled/300);
 	
 	this.direction = "";
 	this.directionIndex = directionIndex;

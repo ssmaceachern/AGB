@@ -15,6 +15,8 @@ var Level = function(game)
 		this.objects = game.objects;
 		
 		this.ghostSpawner = new Spawner(this);
+		this.warning = new Warning(this);
+		
 		this.name = "Level";
 		
 		this.active = true;
@@ -46,12 +48,17 @@ Level.prototype.StartGame = function(){
 Level.prototype.PlayGame = function(){
 	this.CurrentMode = this.MODES.Play;
 	
+	LoseFlag = false;
 	PS.spriteShow(this.sprite, false);
 	
-	PS.statusText("Defeat the Ghosts!");
+	
 	
 	this.Game.addObject(new Player(11, 14, this, 1));
 	this.Game.addObject(new Player(17, 14, this, 2));
+	this.Game.addObject(new Warning(0, 0, this));
+	this.Game.addObject(new Warning(24, 0, this));
+	this.Game.addObject(new Warning(0, 24, this));
+	this.Game.addObject(new Warning(24, 24, this));
 	this.Game.addObject(this.ghostSpawner);
 	
 	this.ghostSpawner.Spawn();
@@ -63,10 +70,13 @@ Level.prototype.PauseGame = function(){
 
 Level.prototype.EndGame = function(){
 	this.CurrentMode = this.MODES.End;
-	PS.imageLoad("lose.png", this.spriteLoader.bind(this), 4);
-	PS.statusText("Damn! Press Enter to Restart");
+	
+	PS.statusText("Press Enter to Restart");
 	
 	this.Game.removeAllObjectsFromLevel();
+	
+	this.sprite = null;
+	PS.imageLoad("lose.png", this.spriteLoader.bind(this), 4);
 };
 
 Level.prototype.GetCurrentMode = function(){
@@ -84,11 +94,12 @@ Level.prototype.Update = function(){
 			}
 			break;
 		case this.MODES.Play:
+			PS.statusText("GHOSTS SLAIN: " + GhostsKilled);
 			break;
 		case this.MODES.Pause:
 			break;
 		case this.MODES.End:
-			
+			//PS.spriteShow(this.sprite, true);
 			if(Game.getKey(PS.KEY_ENTER) === 1){
 				//PS.debug("Player Enter\n");
 				location.reload();

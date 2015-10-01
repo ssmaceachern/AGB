@@ -15,6 +15,8 @@ var GhostPair = function(ghost1, ghost2)
 	this.ghost2 = ghost2;
 };
 
+var GhostsKilled = 0;
+
 var Spawner = function(level){
 	GameObject.call(this, 0, 0, 0, 0, "Spawner");
 	
@@ -24,37 +26,45 @@ var Spawner = function(level){
 	this.collidable = false;
 	
 	this.ghosts = [];
-	this.spawnPoints = [];
+	this.p1spawnPoints = [];
+	this.p2spawnPoints = [];
 };
 
 GameObject.prototype.impart(Spawner);
 
-Spawner.prototype.LoadSpawnPoints = function(){
-	this.spawnPoints.push(new SpawnPoint(11, -1, 	1));
-	this.spawnPoints.push(new SpawnPoint(11, 31, 	0));
-	this.spawnPoints.push(new SpawnPoint(-4, 14, 	2));
+Spawner.prototype.LoadP1SpawnPoints = function(){
+	var player1 = Game.GetObjectByName("Player1");
 	
-	this.spawnPoints.push(new SpawnPoint(17, -1, 	1));
-	this.spawnPoints.push(new SpawnPoint(17, 31, 	0));
-	this.spawnPoints.push(new SpawnPoint(32, 14, 	3));
+	this.p1spawnPoints.push(new SpawnPoint(player1.x, player1.y - 15, 	1));
+	this.p1spawnPoints.push(new SpawnPoint(player1.x, player1.y + 15, 	0));
+	this.p1spawnPoints.push(new SpawnPoint(player1.x - 15, 14, 	2));
+};
+
+Spawner.prototype.LoadP2SpawnPoints = function(){
+	var player2 = Game.GetObjectByName("Player2");
+	
+	this.p2spawnPoints.push(new SpawnPoint(player2.x, player2.y - 15, 	1));
+	this.p2spawnPoints.push(new SpawnPoint(player2.x, player2.y + 15, 	0));
+	this.p2spawnPoints.push(new SpawnPoint(player2.x + 15, 14, 	3));
 };
 
 Spawner.prototype.Spawn = function(){
-	if(this.spawnPoints.length == 0){
-		this.LoadSpawnPoints();
+	if(this.p1spawnPoints.length == 0 && this.p2spawnPoints.length == 0){
+		this.LoadP1SpawnPoints();
+		this.LoadP2SpawnPoints();
 	}
 	
 	var random = Math.round(Math.random() * 2);
-	PS.debug(random + "\n");
+	//PS.debug(random + "\n");
 	
-	var Ghost1Spawn = this.spawnPoints[random];
+	var Ghost1Spawn = this.p1spawnPoints[random];
 	var Ghost1 = new Ghost(Ghost1Spawn.x, Ghost1Spawn.y, this.level, Ghost1Spawn.direction, "Ghost1");
 	this.level.Game.addObject(Ghost1);
 	
-	random = Math.round(Math.random() * 3) + 2;
-	PS.debug(random + "\n");
+	random = Math.round(Math.random() * 2);
+	//PS.debug(random + "\n");
 	
-	var Ghost2Spawn = this.spawnPoints[random];
+	var Ghost2Spawn = this.p2spawnPoints[random];
 	var Ghost2 = new Ghost(Ghost2Spawn.x, Ghost2Spawn.y, this.level, Ghost2Spawn.direction, "Ghost2");
 	this.level.Game.addObject(Ghost2);
 	
@@ -66,11 +76,14 @@ Spawner.prototype.Draw = function(offsetX, offsetY){};
 Spawner.prototype.Update = function(){
 	for(i = 0; this.ghosts.length > 0 && i < this.ghosts.length; i++){
 		if(this.ghosts[i].ghost1.dead && this.ghosts[i].ghost2.dead){
-			PS.debug("Ghosts Killed! \n");
+			//PS.debug("Ghosts Killed! \n");
 			this.ghosts[i].ghost1.remove = true;
 			this.ghosts[i].ghost2.remove = true;
 			this.ghosts.splice(i, 1);
 			
+			GhostsKilled += 2;
+			
+			PS.audioLoad("excellent", {autoplay : true, loop : false, path : "audio/", fileTypes : ["mp3"]});
 			this.Spawn();
 		}
 	}
