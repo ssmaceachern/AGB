@@ -2,8 +2,12 @@
  * @author Sean
  */
 
+var CalculateDistance = function(object1, object2){
+	return Math.sqrt( Math.pow((object1.x-object2.x), 2) + Math.pow((object1.y-object2.y), 2) );
+};
+
 var Player = function(x, y, level, playerNum){
-	GameObject.call(this, x, y, 2, 4, "Player");
+	GameObject.call(this, x, y, 4, 5, "Player" + playerNum);
 	
 	this.color = PS.COLOR_BLACK;
 	this.level = level;
@@ -11,7 +15,9 @@ var Player = function(x, y, level, playerNum){
 	this.active = true;
 	this.collidable = true;
 	
+	this.ghost = null;
 	this.punchFlag = false;
+	this.punchCooldown = 0;
 	
 	this.playerNum = playerNum;
 	
@@ -40,27 +46,72 @@ Player.prototype.Draw = function(offsetX, offsetY){
 };
 
 Player.prototype.Update = function(){
-	// if(this.punchFlag){
-		// this.punchFlag = false;
-	// }
 	
 	switch(this.playerNum){
 		case 1:
+			this.ghost = Game.GetObjectByName("Ghost1");
 			break;
+			
 		case 2:
+			this.ghost = Game.GetObjectByName("Ghost2");
 			break;
 		default:
 			break;
 	}
 	
-	if(Game.getKey(PS.KEY_ARROW_UP) === 1 && Game.getKey(119) === 1){
-		this.punchFlag = true;
-		//PS.color(1,1, PS.COLOR_RED);
-	} else {
-		//PS.color(1,1, PS.COLOR_ORANGE);
-		this.punchFlag = false;
+	//PS.debug(this.name + ": " + CalculateDistance(this, this.ghost) + "\n");
+	
+	if(CalculateDistance(this, this.ghost) < 12){
+		PS.debug("Target is within range!\n");
+		
+		if(this.playerNum == 1){
+			//WSA Keys respectively
+			if(	(Game.getKey(119) 	=== 1 && this.ghost.direction == "SOUTH") || 
+				(Game.getKey(115) 	=== 1 && this.ghost.direction == "NORTH") || 
+				(Game.getKey(97) 	=== 1 && this.ghost.direction == "EAST") && this.punchCooldown == 0){
+				
+				this.Punch();
+			}
+		}else{
+			if(	(Game.getKey(PS.KEY_ARROW_UP) 		=== 1 && this.ghost.direction == "SOUTH") || 
+				(Game.getKey(PS.KEY_ARROW_DOWN) 	=== 1 && this.ghost.direction == "NORTH") || 
+				(Game.getKey(PS.KEY_ARROW_RIGHT) 	=== 1 && this.ghost.direction == "WEST") && this.punchCooldown == 0){
+					
+				this.Punch();
+			}
+		}
 	}
 	
+	if(this.punchCooldown > 0){
+		this.punchCooldown--;
+	}
+	
+	if(this.punchCooldown == 0){
+		this.punchFlag = false;
+	}
+};
+
+Player.prototype.Punch = function()
+{
+	this.punchFlag = true;
+	
+	var random = Math.floor((Math.random() * 4) + 1);
+	switch(random){
+		case 1:
+			PS.audioLoad("punch1", {autoplay : true, loop : false, path : "audio/", fileTypes : ["mp3"]});
+			break;
+		case 2:
+			PS.audioLoad("punch2", {autoplay : true, loop : false, path : "audio/", fileTypes : ["mp3"]});
+			break;
+		case 3:
+			PS.audioLoad("punch3", {autoplay : true, loop : false, path : "audio/", fileTypes : ["mp3"]});
+			break;
+		case 4:
+			PS.audioLoad("punch4", {autoplay : true, loop : false, path : "audio/", fileTypes : ["mp3"]});
+			break;
+	}
+	
+	this.punchCooldown = 30;
 };
 
 Player.prototype.setLevel = function(level)
@@ -71,9 +122,9 @@ Player.prototype.setLevel = function(level)
 Player.prototype.Collision = function(s1, p1, s2, p2, type){
 	
 	var CollidedObject = Game.GetObjectBySprite(s2);
-	if(this.punchFlag && CollidedObject.name == "Ghost"){
+	if(this.punchFlag && (CollidedObject.name == "Ghost1" || CollidedObject.name == "Ghost2")){
 		CollidedObject.dead = true;
-		this.punchFlag = false;
+		//this.punchFlag = false;
 		
 	}else if(this.punchFlag == false){
 		this.level.EndGame();	

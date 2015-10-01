@@ -6,8 +6,8 @@
  * @author Sean
  */
 
-var Ghost = function(x, y, level, directionIndex){
-	GameObject.call(this, x, y, 5, 5, "Ghost");
+var Ghost = function(x, y, level, directionIndex, name){
+	GameObject.call(this, x, y, 5, 5, name);
 	
 	this.color = PS.COLOR_BLACK;
 	this.level = level;
@@ -18,15 +18,22 @@ var Ghost = function(x, y, level, directionIndex){
 	this.collidable = true;
 	this.moveSpeed = 1/30;
 	
-	this.directions = {
-		NORTH 	: -this.moveSpeed,		//0
-		SOUTH 	: this.moveSpeed,		//1
-		EAST 	: -this.moveSpeed,		//2
-		WEST 	: this.moveSpeed		//3
-	};
-	
-	//this.direction = this.directions[directionIndex];
+	this.direction = "";
 	this.directionIndex = directionIndex;
+	switch(this.directionIndex){
+		case(0):
+		this.direction = "NORTH";
+		break;
+		case(1):
+		this.direction = "SOUTH";
+		break;
+		case(2):
+		this.direction = "EAST";
+		break;
+		case(3):
+		this.direction = "WEST";
+		break;
+	}
 	
 	/*
 	 * Load the Ghost sprite
@@ -50,7 +57,6 @@ Ghost.prototype.Draw = function(offsetX, offsetY){
 };
 
 Ghost.prototype.Update = function(){
-	//PS.debug(this.directionIndex + "\n");
 	switch(this.directionIndex){
 		
 		case(0):

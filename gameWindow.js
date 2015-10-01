@@ -140,3 +140,19 @@ Window.prototype.GetObjectBySprite = function(sprite) {
 		}
 	}
 };
+
+Window.prototype.GetObjectByName = function(name) {
+	//PS.debug("Function call\n");
+	if(this.objects.length == 0)
+	{
+		return false;
+	}
+	
+	for(i = 0; i < this.objects.length; i++){
+		
+		if(name == this.objects[i].name){
+			
+			return this.objects[i];
+		}
+	}
+};

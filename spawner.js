@@ -30,13 +30,13 @@ var Spawner = function(level){
 GameObject.prototype.impart(Spawner);
 
 Spawner.prototype.LoadSpawnPoints = function(){
-	this.spawnPoints.push(new SpawnPoint(17, -1, 	1));
-	this.spawnPoints.push(new SpawnPoint(17, 31, 	0));
-	this.spawnPoints.push(new SpawnPoint(32, 14, 	3));
-	
 	this.spawnPoints.push(new SpawnPoint(11, -1, 	1));
 	this.spawnPoints.push(new SpawnPoint(11, 31, 	0));
 	this.spawnPoints.push(new SpawnPoint(-4, 14, 	2));
+	
+	this.spawnPoints.push(new SpawnPoint(17, -1, 	1));
+	this.spawnPoints.push(new SpawnPoint(17, 31, 	0));
+	this.spawnPoints.push(new SpawnPoint(32, 14, 	3));
 };
 
 Spawner.prototype.Spawn = function(){
@@ -48,14 +48,14 @@ Spawner.prototype.Spawn = function(){
 	PS.debug(random + "\n");
 	
 	var Ghost1Spawn = this.spawnPoints[random];
-	var Ghost1 = new Ghost(Ghost1Spawn.x, Ghost1Spawn.y, this.level, Ghost1Spawn.direction);
+	var Ghost1 = new Ghost(Ghost1Spawn.x, Ghost1Spawn.y, this.level, Ghost1Spawn.direction, "Ghost1");
 	this.level.Game.addObject(Ghost1);
 	
 	random = Math.round(Math.random() * 3) + 2;
 	PS.debug(random + "\n");
 	
 	var Ghost2Spawn = this.spawnPoints[random];
-	var Ghost2 = new Ghost(Ghost2Spawn.x, Ghost2Spawn.y, this.level, Ghost2Spawn.direction);
+	var Ghost2 = new Ghost(Ghost2Spawn.x, Ghost2Spawn.y, this.level, Ghost2Spawn.direction, "Ghost2");
 	this.level.Game.addObject(Ghost2);
 	
 	this.ghosts.push(new GhostPair(Ghost1, Ghost2));
@@ -69,7 +69,8 @@ Spawner.prototype.Update = function(){
 			PS.debug("Ghosts Killed! \n");
 			this.ghosts[i].ghost1.remove = true;
 			this.ghosts[i].ghost2.remove = true;
-			this.ghosts = [];
+			this.ghosts.splice(i, 1);
+			
 			this.Spawn();
 		}
 	}
