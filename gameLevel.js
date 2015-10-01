@@ -71,6 +71,11 @@ Level.prototype.PauseGame = function(){
 Level.prototype.EndGame = function(){
 	this.CurrentMode = this.MODES.End;
 	
+	PS.timerStart(180, function(){
+		PS.statusText("GHOSTS SLAIN: " + GhostsKilled);	
+	});
+	
+	
 	PS.statusText("Press Enter to Restart");
 	
 	this.Game.removeAllObjectsFromLevel();
