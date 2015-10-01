@@ -19,14 +19,15 @@ var Ghost = function(x, y, level, directionIndex){
 	this.moveSpeed = 1/30;
 	
 	this.directions = {
-		NORTH 	: this.moveSpeed,		//0
+		NORTH 	: -this.moveSpeed,		//0
 		SOUTH 	: this.moveSpeed,		//1
-		EAST 	: this.moveSpeed,		//2
+		EAST 	: -this.moveSpeed,		//2
 		WEST 	: this.moveSpeed		//3
 	};
 	
 	//this.direction = this.directions[directionIndex];
 	this.directionIndex = directionIndex;
+	
 	/*
 	 * Load the Ghost sprite
 	 */
@@ -49,7 +50,7 @@ Ghost.prototype.Draw = function(offsetX, offsetY){
 };
 
 Ghost.prototype.Update = function(){
-	PS.debug(this.directionIndex + "\n");
+	//PS.debug(this.directionIndex + "\n");
 	switch(this.directionIndex){
 		
 		case(0):

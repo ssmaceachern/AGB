@@ -32,11 +32,11 @@ GameObject.prototype.impart(Spawner);
 Spawner.prototype.LoadSpawnPoints = function(){
 	this.spawnPoints.push(new SpawnPoint(17, -1, 	1));
 	this.spawnPoints.push(new SpawnPoint(17, 31, 	0));
-	this.spawnPoints.push(new SpawnPoint(-4, 14, 	2));
+	this.spawnPoints.push(new SpawnPoint(32, 14, 	3));
 	
 	this.spawnPoints.push(new SpawnPoint(11, -1, 	1));
 	this.spawnPoints.push(new SpawnPoint(11, 31, 	0));
-	this.spawnPoints.push(new SpawnPoint(32, 14, 	3));
+	this.spawnPoints.push(new SpawnPoint(-4, 14, 	2));
 };
 
 Spawner.prototype.Spawn = function(){
@@ -44,7 +44,7 @@ Spawner.prototype.Spawn = function(){
 		this.LoadSpawnPoints();
 	}
 	
-	var random = Math.floor(Math.random() * 3);
+	var random = Math.round(Math.random() * 2);
 	PS.debug(random + "\n");
 	
 	var Ghost1Spawn = this.spawnPoints[random];

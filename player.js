@@ -44,14 +44,14 @@ Player.prototype.Update = function(){
 		// this.punchFlag = false;
 	// }
 	
-	// switch(this.playerNum){
-		// case 1:
-			// break;
-		// case 2:
-			// break;
-		// default:
-			// break;
-	// }
+	switch(this.playerNum){
+		case 1:
+			break;
+		case 2:
+			break;
+		default:
+			break;
+	}
 	
 	if(Game.getKey(PS.KEY_ARROW_UP) === 1 && Game.getKey(119) === 1){
 		this.punchFlag = true;
