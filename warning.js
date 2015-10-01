@@ -31,7 +31,7 @@ Warning.prototype.Draw = function(offsetX, offsetY){
 		this.imageID = PS.imageLoad("warning.png", this.spriteLoader.bind(this), 4);
 	}
 	
-	if(this.player1.distanceFromGhost < 8 || this.player2.distanceFromGhost < 8){
+	if(this.player1.distanceFromGhost < 10 || this.player2.distanceFromGhost < 10){
 		PS.spriteShow(this.sprite, true);
 		
 	}
