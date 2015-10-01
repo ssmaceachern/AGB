@@ -1,7 +1,7 @@
 ﻿// game.js for Perlenspiel 3.2
-//DRAWBBLE
+//Atomic Ghost Brawl
 
-//draws a line along the swiped mouse path
+//fight ghosts
 
 /*
 Perlenspiel is a scheme by Professor Moriarty (bmoriarty@wpi.edu).
@@ -54,6 +54,9 @@ PS.init = function( system, options ) {
 	
 	Level.StartGame();
 	
+	PS.debug("Defeat ghosts using kung fu by pushing the right key as they get near!\n");
+	PS.debug("Player 1: WASD\n");
+	PS.debug("Player 2: Arrow Keys\n")
 };
 
 // PS.touch ( x, y, data, options )

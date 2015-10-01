@@ -45,14 +45,14 @@ Spawner.prototype.Spawn = function(){
 		this.LoadSpawnPoints();
 	}
 	
-	var random = Math.round(Math.random() * 3);
+	var random = Math.floor(Math.random() * 3);
 	
 	var Ghost1Spawn = this.spawnPoints[random];
 	//PS.debug(Ghost1Spawn.x + " " + Ghost1Spawn.y + " " + random + "\n");
 	var Ghost1 = new Ghost(Ghost1Spawn.x, Ghost1Spawn.y, this.level, Ghost1Spawn.direction);
 	this.level.Game.addObject(Ghost1);
 	
-	random = Math.round(Math.random() * 3) + 2;
+	random = Math.floor(Math.random() * 3) + 3;
 	
 	var Ghost2Spawn = this.spawnPoints[random];
 	//PS.debug(Ghost2Spawn.x + " " + Ghost2Spawn.y + " " + random + "\n");

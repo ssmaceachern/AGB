@@ -11,7 +11,17 @@ var Player = function(x, y, level, playerNum){
 	this.active = true;
 	this.collidable = true;
 	
-	this.punchFlag = false;
+	this.punchFlagUpUp = false;
+	this.punchFlagUpRight = false;
+	this.punchFlagUpDown = false;
+	this.punchFlagLeftUp = false;
+	this.punchFlagLeftRight = false;
+	this.punchFlagLeftDown = false;
+	this.punchFlagDownUp = false;
+	this.punchFlagDownRight = false;
+	this.punchFlagDownDown = false;
+	
+	this.punchCooldown = 0;
 	
 	this.playerNum = playerNum;
 	
@@ -53,12 +63,220 @@ Player.prototype.Update = function(){
 			// break;
 	// }
 	
-	if(Game.getKey(PS.KEY_ARROW_UP) === 1 && Game.getKey(119) === 1){
-		this.punchFlag = true;
-		//PS.color(1,1, PS.COLOR_RED);
-	} else {
-		//PS.color(1,1, PS.COLOR_ORANGE);
-		this.punchFlag = false;
+	PS.debug("punchCooldown: " + this.punchCooldown + "\n");
+	
+	if(this.punchCooldown > 0){
+		this.punchCooldown--;
+	}
+	else{
+		this.punchFlagUpUp = false;
+		this.punchFlagUpRight = false;
+		this.punchFlagUpDown = false;
+		this.punchFlagLeftUp = false;
+		this.punchFlagLeftRight = false;
+		this.punchFlagLeftDown = false;
+		this.punchFlagDownUp = false;
+		this.punchFlagDownRight = false;
+		this.punchFlagDownDown = false;
+	}
+	
+	if(Game.getKey(119) === 1 && Game.getKey(PS.KEY_ARROW_UP) === 1){
+		if(this.punchCooldown == 0){
+			//punch: needs animation
+			this.punchFlagUpUp = true;
+			var rando = Math.floor((Math.random() * 4) + 1);
+			switch(rando){
+				case 1:
+					PS.audioLoad("punch1", {autoplay : true, loop : false, path : "audio/", fileTypes : ["mp3"]});
+					break;
+				case 2:
+					PS.audioLoad("punch2", {autoplay : true, loop : false, path : "audio/", fileTypes : ["mp3"]});
+					break;
+				case 3:
+					PS.audioLoad("punch3", {autoplay : true, loop : false, path : "audio/", fileTypes : ["mp3"]});
+					break;
+				case 4:
+					PS.audioLoad("punch4", {autoplay : true, loop : false, path : "audio/", fileTypes : ["mp3"]});
+					break;
+			}
+			this.punchCooldown = 30;
+		}
+	}
+	else if(Game.getKey(119) === 1 && Game.getKey(PS.KEY_ARROW_RIGHT) === 1){
+		if(this.punchCooldown == 0){
+			//punch: needs animation
+			this.punchFlagUpRight = true;
+			var rando = Math.floor((Math.random() * 4) + 1);
+			switch(rando){
+				case 1:
+					PS.audioLoad("punch1", {autoplay : true, loop : false, path : "audio/", fileTypes : ["mp3"]});
+					break;
+				case 2:
+					PS.audioLoad("punch2", {autoplay : true, loop : false, path : "audio/", fileTypes : ["mp3"]});
+					break;
+				case 3:
+					PS.audioLoad("punch3", {autoplay : true, loop : false, path : "audio/", fileTypes : ["mp3"]});
+					break;
+				case 4:
+					PS.audioLoad("punch4", {autoplay : true, loop : false, path : "audio/", fileTypes : ["mp3"]});
+					break;
+			}
+			this.punchCooldown = 30;
+		}
+	}
+	else if(Game.getKey(119) === 1 && Game.getKey(PS.KEY_ARROW_DOWN) === 1){
+		if(this.punchCooldown == 0){
+			//punch: needs animation
+			this.punchFlagUpDown = true;
+			var rando = Math.floor((Math.random() * 4) + 1);
+			switch(rando){
+				case 1:
+					PS.audioLoad("punch1", {autoplay : true, loop : false, path : "audio/", fileTypes : ["mp3"]});
+					break;
+				case 2:
+					PS.audioLoad("punch2", {autoplay : true, loop : false, path : "audio/", fileTypes : ["mp3"]});
+					break;
+				case 3:
+					PS.audioLoad("punch3", {autoplay : true, loop : false, path : "audio/", fileTypes : ["mp3"]});
+					break;
+				case 4:
+					PS.audioLoad("punch4", {autoplay : true, loop : false, path : "audio/", fileTypes : ["mp3"]});
+					break;
+			}
+			this.punchCooldown = 30;
+		}
+	}
+	else if(Game.getKey(97) === 1 && Game.getKey(PS.KEY_ARROW_UP) === 1){
+		if(this.punchCooldown == 0){
+			//punch: needs animation
+			this.punchFlagLeftUp = true;
+			var rando = Math.floor((Math.random() * 4) + 1);
+			switch(rando){
+				case 1:
+					PS.audioLoad("punch1", {autoplay : true, loop : false, path : "audio/", fileTypes : ["mp3"]});
+					break;
+				case 2:
+					PS.audioLoad("punch2", {autoplay : true, loop : false, path : "audio/", fileTypes : ["mp3"]});
+					break;
+				case 3:
+					PS.audioLoad("punch3", {autoplay : true, loop : false, path : "audio/", fileTypes : ["mp3"]});
+					break;
+				case 4:
+					PS.audioLoad("punch4", {autoplay : true, loop : false, path : "audio/", fileTypes : ["mp3"]});
+					break;
+			}
+			this.punchCooldown = 30;
+		}
+	}
+	else if(Game.getKey(97) === 1 && Game.getKey(PS.KEY_ARROW_RIGHT) === 1){
+		if(this.punchCooldown == 0){
+			//punch: needs animation
+			this.punchFlagLeftRight = true;
+			var rando = Math.floor((Math.random() * 4) + 1);
+			switch(rando){
+				case 1:
+					PS.audioLoad("punch1", {autoplay : true, loop : false, path : "audio/", fileTypes : ["mp3"]});
+					break;
+				case 2:
+					PS.audioLoad("punch2", {autoplay : true, loop : false, path : "audio/", fileTypes : ["mp3"]});
+					break;
+				case 3:
+					PS.audioLoad("punch3", {autoplay : true, loop : false, path : "audio/", fileTypes : ["mp3"]});
+					break;
+				case 4:
+					PS.audioLoad("punch4", {autoplay : true, loop : false, path : "audio/", fileTypes : ["mp3"]});
+					break;
+			}
+			this.punchCooldown = 30;
+		}
+	}
+	else if(Game.getKey(97) === 1 && Game.getKey(PS.KEY_ARROW_DOWN) === 1){
+		if(this.punchCooldown == 0){
+			//punch: needs animation
+			this.punchFlagLeftDown = true;
+			var rando = Math.floor((Math.random() * 4) + 1);
+			switch(rando){
+				case 1:
+					PS.audioLoad("punch1", {autoplay : true, loop : false, path : "audio/", fileTypes : ["mp3"]});
+					break;
+				case 2:
+					PS.audioLoad("punch2", {autoplay : true, loop : false, path : "audio/", fileTypes : ["mp3"]});
+					break;
+				case 3:
+					PS.audioLoad("punch3", {autoplay : true, loop : false, path : "audio/", fileTypes : ["mp3"]});
+					break;
+				case 4:
+					PS.audioLoad("punch4", {autoplay : true, loop : false, path : "audio/", fileTypes : ["mp3"]});
+					break;
+			}
+			this.punchCooldown = 30;
+		}
+	}
+	else if(Game.getKey(115) === 1 && Game.getKey(PS.KEY_ARROW_UP) === 1){
+		if(this.punchCooldown == 0){
+			//punch: needs animation
+			this.punchFlagDownUp = true;
+			var rando = Math.floor((Math.random() * 4) + 1);
+			switch(rando){
+				case 1:
+					PS.audioLoad("punch1", {autoplay : true, loop : false, path : "audio/", fileTypes : ["mp3"]});
+					break;
+				case 2:
+					PS.audioLoad("punch2", {autoplay : true, loop : false, path : "audio/", fileTypes : ["mp3"]});
+					break;
+				case 3:
+					PS.audioLoad("punch3", {autoplay : true, loop : false, path : "audio/", fileTypes : ["mp3"]});
+					break;
+				case 4:
+					PS.audioLoad("punch4", {autoplay : true, loop : false, path : "audio/", fileTypes : ["mp3"]});
+					break;
+			}
+			this.punchCooldown = 30;
+		}
+	}
+	else if(Game.getKey(115) === 1 && Game.getKey(PS.KEY_ARROW_RIGHT) === 1){
+		if(this.punchCooldown == 0){
+			//punch: needs animation
+			this.punchFlagDownRight = true;
+			var rando = Math.floor((Math.random() * 4) + 1);
+			switch(rando){
+				case 1:
+					PS.audioLoad("punch1", {autoplay : true, loop : false, path : "audio/", fileTypes : ["mp3"]});
+					break;
+				case 2:
+					PS.audioLoad("punch2", {autoplay : true, loop : false, path : "audio/", fileTypes : ["mp3"]});
+					break;
+				case 3:
+					PS.audioLoad("punch3", {autoplay : true, loop : false, path : "audio/", fileTypes : ["mp3"]});
+					break;
+				case 4:
+					PS.audioLoad("punch4", {autoplay : true, loop : false, path : "audio/", fileTypes : ["mp3"]});
+					break;
+			}
+			this.punchCooldown = 30;
+		}
+	}
+	else if(Game.getKey(115) === 1 && Game.getKey(PS.KEY_ARROW_DOWN) === 1){
+		if(this.punchCooldown == 0){
+			//punch: needs animation
+			this.punchFlagDownDown = true;
+			var rando = Math.floor((Math.random() * 4) + 1);
+			switch(rando){
+				case 1:
+					PS.audioLoad("punch1", {autoplay : true, loop : false, path : "audio/", fileTypes : ["mp3"]});
+					break;
+				case 2:
+					PS.audioLoad("punch2", {autoplay : true, loop : false, path : "audio/", fileTypes : ["mp3"]});
+					break;
+				case 3:
+					PS.audioLoad("punch3", {autoplay : true, loop : false, path : "audio/", fileTypes : ["mp3"]});
+					break;
+				case 4:
+					PS.audioLoad("punch4", {autoplay : true, loop : false, path : "audio/", fileTypes : ["mp3"]});
+					break;
+			}
+			this.punchCooldown = 30;
+		}
 	}
 	
 };
@@ -69,7 +287,6 @@ Player.prototype.setLevel = function(level)
 };
 
 Player.prototype.Collision = function(s1, p1, s2, p2, type){
-	
 	var CollidedObject = Game.GetObjectBySprite(s2);
 	if(this.punchFlag && CollidedObject.name == "Ghost"){
 		CollidedObject.dead = true;
