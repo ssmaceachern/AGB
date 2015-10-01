@@ -51,8 +51,6 @@ Level.prototype.PlayGame = function(){
 	LoseFlag = false;
 	PS.spriteShow(this.sprite, false);
 	
-	
-	
 	this.Game.addObject(new Player(11, 14, this, 1));
 	this.Game.addObject(new Player(17, 14, this, 2));
 	this.Game.addObject(new Warning(0, 0, this));
@@ -62,6 +60,8 @@ Level.prototype.PlayGame = function(){
 	this.Game.addObject(this.ghostSpawner);
 	
 	this.ghostSpawner.Spawn();
+	
+	PS.audioLoad("fight", {autoplay : true, loop : false, path : "audio/", fileTypes : ["mp3"]});
 };
 
 Level.prototype.PauseGame = function(){

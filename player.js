@@ -143,6 +143,7 @@ Player.prototype.Collision = function(s1, p1, s2, p2, type){
 			//CollidedObject.dead = true;
 		}
 		else{
+			PS.audioLoad("explosion", {autoplay : true, loop : false, path : "audio/", fileTypes : ["mp3"]});
 			LoseFlag = true;	
 		}
 		
