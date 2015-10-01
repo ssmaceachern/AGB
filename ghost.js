@@ -66,8 +66,7 @@ Ghost.prototype.Update = function(){
 		break;
 	}
 	
-	//this.y += this.moveSpeed;
-	PS.debug(this.sprite + ": " + this.x + " " + this.y + "\n");
+	//PS.debug(this.sprite + ": " + this.x + " " + this.y + "\n");
 };
 
 Ghost.prototype.setLevel = function(level)
